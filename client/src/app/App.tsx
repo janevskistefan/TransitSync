@@ -1,17 +1,15 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
-import MainLayout from './MainLayout';
-import RouteEditor from '../features/route-editor/RouteEditor';
+import Layout from './Layout';
+import RouteEditor from '../components/RouteEditor.page';
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<RouteEditor />}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<RouteEditor />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
+);
 
 export default App;

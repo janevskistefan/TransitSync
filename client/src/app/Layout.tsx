@@ -16,8 +16,6 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-const SIDEBAR_WIDTH = 60;
-
 const navItems = [
   { label: 'Home', icon: <HomeIcon />, path: '/' },
   { label: 'Routes', icon: <DirectionsBusIcon />, path: '/#' },
@@ -36,16 +34,11 @@ const Sidebar: React.FC = () => {
 
   return (
     <Box
-      width={SIDEBAR_WIDTH}
-      height="100vh"
+      width="60px"
       display="flex"
       flexDirection="column"
       borderRight={1}
       borderColor="divider"
-      position="fixed"
-      top={0}
-      left={0}
-      zIndex={1200}
     >
       <Box flex={1}>
         <List>
@@ -84,13 +77,13 @@ const Sidebar: React.FC = () => {
   );
 };
 
-const MainLayout: React.FC = () => (
-  <Box display="flex" minHeight="100vh">
+const Layout: React.FC = () => (
+  <Box display="flex" height={'100vh'} width={'100vw'}>
     <Sidebar />
-    <Box flex={1} ml={`${SIDEBAR_WIDTH}px`} px={3}>
+    <Box flex={1} px={3}>
       <Outlet />
     </Box>
   </Box>
 );
 
-export default MainLayout;
+export default Layout;
