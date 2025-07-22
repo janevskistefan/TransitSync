@@ -21,9 +21,20 @@
 		<okhttp.version>4.12.0</okhttp.version>
 		<gson.version>2.11.0</gson.version>
 		<gson-fire.version>1.9.0</gson-fire.version>
+		<build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
+		<flyway-core.version>11.10.3</flyway-core.version>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -40,6 +51,7 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
+			<version>${flyway-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -114,6 +126,25 @@
 								<sourceFolder>src/gen/java/main</sourceFolder>
 								<useJakartaEe>true</useJakartaEe>
 							</configOptions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>${build-helper-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>add-test-source</id>
+						<phase>generate-test-sources</phase>
+						<goals>
+							<goal>add-test-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/openapi/src/test/java</source>
+							</sources>
 						</configuration>
 					</execution>
 				</executions>
