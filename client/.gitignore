@@ -1,16 +1,10 @@
-# Local
-.DS_Store
-*.local
-*.log*
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
 
-# Dist
 node_modules
-dist/
+bower_components
 
-# Profile
-.rspack-profile-*/
-
-# IDE
-.vscode/*
-!.vscode/extensions.json
-.idea
+*.sublime*
