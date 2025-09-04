@@ -1,0 +1,14 @@
+# Everything should live inside a single interface that is called GtfsApi
+
+# TODO: GET Endpoint that returns all GTFS Data
+# TODO: POST Endpoint for inserting GTFS Data
+
+# TODO: Endpoints for Agency
+# TODO: Endpoints for Stops
+# TODO: Endpoints for Routes
+# TODO: Endpoints for Trips
+# TODO: Endpoints for StopTimes
+# TODO: Endpoints for Calendar
+# TODO: Endpoints for CalendarDates
+# TODO: Endpoints for FareAttributes
+# TODO: Endpoints for RiderCategories

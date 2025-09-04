@@ -1,5 +1,6 @@
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer } from 'react-leaflet';
+import { OnboardingWizard } from '../../modules/onboarding-wizard/components/OnboardingWizard';
 
 const CustomMapView: React.FC = () => (
   <MapContainer
@@ -12,6 +13,7 @@ const CustomMapView: React.FC = () => (
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
+    <OnboardingWizard></OnboardingWizard>
   </MapContainer>
 );
 

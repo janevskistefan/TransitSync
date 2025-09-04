@@ -6,6 +6,9 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import globals from 'globals';
 import ts from 'typescript-eslint';
 
+// TODO: Fix esLint.
+// TODO: Add a configuration for eslint-boundaries and eslint-import for enforcing the developer to use exports.ts instead of importing module specific components.
+
 export default [
   { languageOptions: { globals: globals.browser } },
   js.configs.recommended,

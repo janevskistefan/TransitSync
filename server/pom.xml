@@ -9,10 +9,10 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.janevskistefan</groupId>
-	<artifactId>public-transport-manager</artifactId>
+	<artifactId>transitsync</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>public-transport-manager</name>
-	<description>Public Transport Manager</description>
+	<name>transitsync-server</name>
+	<description>TransitSync Server</description>
 
 	<properties>
 		<java.version>21</java.version>
@@ -120,31 +120,12 @@
 							<goal>generate</goal>
 						</goals>
 						<configuration>
-							<inputSpec>${project.basedir}/src/main/resources/contracts/api/api.yaml</inputSpec>
+							<inputSpec>${project.basedir}/../schemas/openapi/api.yaml</inputSpec>
 							<generatorName>java</generatorName>
 							<configOptions>
 								<sourceFolder>src/gen/java/main</sourceFolder>
 								<useJakartaEe>true</useJakartaEe>
 							</configOptions>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>${build-helper-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>add-test-source</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>add-test-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${project.build.directory}/generated-sources/openapi/src/test/java</source>
-							</sources>
 						</configuration>
 					</execution>
 				</executions>

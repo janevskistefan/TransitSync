@@ -1,0 +1,314 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: api@transit-example.com
+    name: API Support
+    url: https://www.transit-example.com/support
+  description: |-
+    A sample REST API for accessing public transit data from a GTFS feed.
+    This API allows users to query for agencies, routes, stops, and schedule information.
+  title: GTFS Transit API
+  version: 1.0.0
+servers:
+- description: Production API Server
+  url: https://api.transit-example.com/v1
+tags:
+- description: Operations related to transit agencies.
+  name: Agencies
+- description: Operations for retrieving route information.
+  name: Routes
+- description: Operations for finding stops and their information.
+  name: Stops
+- description: Operations for retrieving schedule and departure times.
+  name: Schedules
+paths:
+  /agencies:
+    get:
+      description: Returns a list of all transit agencies available in the feed.
+      operationId: getAgencies
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Agency"
+                type: array
+          description: A list of agencies.
+      summary: List all transit agencies
+      tags:
+      - Agencies
+      x-accepts:
+      - application/json
+  /routes:
+    get:
+      description: "Returns a list of transit routes, optionally filtered by agency."
+      operationId: getRoutes
+      parameters:
+      - description: The ID of the agency to filter routes by.
+        explode: true
+        in: query
+        name: agencyId
+        required: false
+        schema:
+          example: MTA
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Route"
+                type: array
+          description: A list of routes that match the criteria.
+      summary: Find transit routes
+      tags:
+      - Routes
+      x-accepts:
+      - application/json
+  /stops:
+    get:
+      description: Returns a list of stops within a specified radius of a geographic
+        point.
+      operationId: getStops
+      parameters:
+      - description: Latitude of the search center.
+        explode: true
+        in: query
+        name: lat
+        required: true
+        schema:
+          example: 42.0012
+          format: double
+          type: number
+        style: form
+      - description: Longitude of the search center.
+        explode: true
+        in: query
+        name: lon
+        required: true
+        schema:
+          example: 21.4325
+          format: double
+          type: number
+        style: form
+      - description: Search radius in meters.
+        explode: true
+        in: query
+        name: radius
+        required: false
+        schema:
+          default: 500
+          example: 500
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/Stop"
+                type: array
+          description: A list of nearby stops.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Invalid coordinates provided.
+      summary: Find transit stops near a location
+      tags:
+      - Stops
+      x-accepts:
+      - application/json
+  /stops/{stopId}/departures:
+    get:
+      description: "Returns a list of upcoming departures for a specific stop, including\
+        \ route and trip information."
+      operationId: getStopDepartures
+      parameters:
+      - description: The unique ID of the stop.
+        explode: false
+        in: path
+        name: stopId
+        required: true
+        schema:
+          example: STP_GTC_1
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/StopDeparture"
+                type: array
+          description: A list of upcoming scheduled departures.
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+          description: Stop not found.
+      summary: Get upcoming departures for a stop
+      tags:
+      - Schedules
+      - Stops
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    Agency:
+      description: A transit agency from the `agency.txt` GTFS file.
+      example:
+        agency_timezone: Europe/Skopje
+        agency_name: JSP Skopje
+        agency_url: https://jsp.com.mk
+        agency_id: JSP
+      properties:
+        agency_id:
+          description: A unique identifier for the transit agency.
+          example: JSP
+          type: string
+        agency_name:
+          description: The full name of the transit agency.
+          example: JSP Skopje
+          type: string
+        agency_url:
+          description: The URL of the transit agency.
+          example: https://jsp.com.mk
+          format: uri
+          type: string
+        agency_timezone:
+          description: The timezone where the agency is located.
+          example: Europe/Skopje
+          type: string
+      type: object
+    Route:
+      description: A transit route from the `routes.txt` GTFS file.
+      example:
+        route_id: R_2
+        route_long_name: Автокоманда - Сарај
+        route_type: 3
+        agency_id: JSP
+        route_short_name: "2"
+        route_color: FF0000
+      properties:
+        route_id:
+          description: A unique identifier for the route.
+          example: R_2
+          type: string
+        agency_id:
+          description: ID of the agency that operates this route.
+          example: JSP
+          type: string
+        route_short_name:
+          description: "A short name for the route, often a number or letter."
+          example: "2"
+          type: string
+        route_long_name:
+          description: "The full, descriptive name of the route."
+          example: Автокоманда - Сарај
+          type: string
+        route_type:
+          description: |-
+            The type of transportation used on this route.
+            * `0` - Tram, Streetcar, Light rail
+            * `1` - Subway, Metro
+            * `2` - Rail
+            * `3` - Bus
+            * `4` - Ferry
+            * `5` - Cable tram
+            * `6` - Aerial lift
+            * `7` - Funicular
+          example: 3
+          type: integer
+        route_color:
+          description: "The color associated with the route, in hex format."
+          example: FF0000
+          type: string
+      type: object
+    Stop:
+      description: A transit stop or station from the `stops.txt` GTFS file.
+      example:
+        wheelchair_boarding: 1
+        stop_lon: 21.431
+        stop_id: STP_GTC_1
+        stop_lat: 41.995
+        stop_name: Рекорд
+      properties:
+        stop_id:
+          description: Unique identifier for the stop.
+          example: STP_GTC_1
+          type: string
+        stop_name:
+          description: The name of the stop.
+          example: Рекорд
+          type: string
+        stop_lat:
+          description: The latitude of the stop.
+          example: 41.995
+          format: double
+          type: number
+        stop_lon:
+          description: The longitude of the stop.
+          example: 21.431
+          format: double
+          type: number
+        wheelchair_boarding:
+          description: "Information on wheelchair accessibility. `1` for some level\
+            \ of accessibility, `2` for no accessibility."
+          example: 1
+          type: integer
+      type: object
+    StopDeparture:
+      description: A consolidated object representing a scheduled departure from a
+        stop.
+      example:
+        trip_id: T_22_1_A
+        route_id: R_22
+        route_short_name: "22"
+        trip_headsign: Лепенец
+        departure_time: 08:15:00
+      properties:
+        departure_time:
+          description: The scheduled departure time (HH:MM:SS).
+          example: 08:15:00
+          format: time
+          type: string
+        route_short_name:
+          description: The short name of the route for this trip.
+          example: "22"
+          type: string
+        trip_headsign:
+          description: The headsign or destination of the trip.
+          example: Лепенец
+          type: string
+        route_id:
+          example: R_22
+          type: string
+        trip_id:
+          example: T_22_1_A
+          type: string
+      type: object
+    Error:
+      example:
+        code: 0
+        message: message
+      properties:
+        code:
+          description: HTTP status code.
+          format: int32
+          type: integer
+        message:
+          description: A human-readable error message.
+          type: string
+      required:
+      - code
+      - message
+      type: object
+

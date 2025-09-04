@@ -1,14 +1,11 @@
 {
-  "name": "public-transport-manager",
+  "name": "transit-sync-client-app",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "format": "prettier --write .",
-    "lint": "eslint ."
+    "build": "vite build"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

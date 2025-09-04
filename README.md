@@ -1,3 +1,7 @@
-# Public Transport Manager
+# TransitSync
 
-Create and maintain GTFS feeds that integrate with Google Maps.
+Connecting your local transport data to the world's most-used navigation apps.
+
+## Technical Details
+
+This Monorepo contains...
