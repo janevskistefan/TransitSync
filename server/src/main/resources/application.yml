@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: public-transport-manager
+  datasource:
+    url: jdbc:postgresql://localhost:5432/transitsync
+    username: user
+    password: password
+  flyway:
+    enabled: true
+    locations: classpath:db-migrations
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    # Show SQL statements in the console for debugging
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true

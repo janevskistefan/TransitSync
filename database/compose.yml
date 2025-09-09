@@ -6,7 +6,7 @@ services:
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=ptm
+      - POSTGRES_DB=transitsync
     ports:
       - "5432:5432"
     volumes:
