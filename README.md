@@ -19,7 +19,7 @@ This is a monorepo that contains all the components necessary for TransitSync.
 - `database/`: Contains the compose.yml file for running the database locally with Docker.
 - `schemas/`: A shared directory that acts as a contract registry, used by both the frontend and backend to generate common models.
 - `data/`: A temporary directory for holding public transit information, which will be removed in a future update.
-`.github/`: Stores all GitHub Actions workflows for continuous integration and deployment.
+- `.github/`: Stores all GitHub Actions workflows for continuous integration and deployment.
 
 ## How to Contribute
 
