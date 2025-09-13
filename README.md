@@ -32,7 +32,7 @@ To contribute, you'll need the following tools:
 Follow these steps to get the full suite running on your machine:
 
 - Start the database:
-    - Navigate to the database directory and run `docker compose up -d`. This will start a PostgreSQL container in the background.
+    - Navigate to the `database` directory and run `docker compose up -d`. This will start a PostgreSQL container in the background.
 - Run the backend:
     - Go to the `server` directory.
     - Run `mvn clean package` to clean the build and compile the code.
